@@ -1,0 +1,31 @@
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.learnmate.ui.auth.SplashFragment"
+        android:label="Splash">
+
+        <action
+            android:id="@+id/action_splash_to_auth"
+            app:destination="@id/authFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="com.example.learnmate.ui.auth.AuthFragment"
+        android:label="Auth">
+
+        <action
+            android:id="@+id/action_auth_to_main"
+            app:destination="@id/mainFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.learnmate.ui.main.MainFragment"
+        android:label="Main"/>
+</navigation>

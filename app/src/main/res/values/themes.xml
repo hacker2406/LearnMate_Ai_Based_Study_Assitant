@@ -1,0 +1,27 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 1️⃣ Splash Theme (Used ONLY at launch) -->
+    <style name="Theme.LearnMate.Splash" parent="Theme.SplashScreen">
+
+
+
+    </style>
+
+
+    <!-- 2️⃣ Normal App Theme -->
+    <style name="Theme.LearnMate" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Your normal theme customization -->
+        <!-- Background color when app icon is tapped -->
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+
+        <!-- Your launcher icon -->
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+
+        <!-- Remove circle behind icon -->
+        <item name="windowSplashScreenIconBackgroundColor">@android:color/transparent</item>
+
+        <!-- Theme to apply after splash -->
+        <item name="postSplashScreenTheme">@style/Theme.LearnMate</item>f
+    </style>
+
+</resources>

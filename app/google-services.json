@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1041524657707",
+    "project_id": "learnmate-fa8be",
+    "storage_bucket": "learnmate-fa8be.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041524657707:android:a3f9180749371965ede46e",
+        "android_client_info": {
+          "package_name": "com.example.learnmate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDl9HPPpQMzl17_AWDKP9K9Q1cvu3o0v4o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
