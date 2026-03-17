@@ -8,6 +8,7 @@ import com.example.learnmate.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.Calendar
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -18,9 +19,23 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
 
+        setGreeting()
         loadUserName()
+        setupMoodPicker()
+        setupToolCards()
     }
 
+    // ── Greeting changes based on time of day ──────────────────────────
+    private fun setGreeting() {
+        val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        binding.tvGreeting.text = when {
+            hour < 12 -> "Good morning,"
+            hour < 17 -> "Good afternoon,"
+            else      -> "Good evening,"
+        }
+    }
+
+    // ── Load first name from Firestore ─────────────────────────────────
     private fun loadUserName() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
@@ -28,11 +43,57 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             .document(uid)
             .get()
             .addOnSuccessListener { snapshot ->
+                // Guard: check binding is still alive (user may have navigated away)
+                if (_binding == null) return@addOnSuccessListener
+
                 val fullName = snapshot.getString("name").orEmpty().trim()
-                if (fullName.isNotEmpty()) {
-                    binding.tvUserName.text = fullName.substringBefore(" ")
+                binding.tvUserName.text = if (fullName.isNotEmpty()) {
+                    "${fullName.substringBefore(" ")} 👋"
+                } else {
+                    "Learner 👋"   // fallback if name missing in Firestore
                 }
             }
+            .addOnFailureListener {
+                // Silently fall back — don't crash if Firestore is unreachable
+                if (_binding != null) {
+                    binding.tvUserName.text = "Learner 👋"
+                }
+            }
+    }
+
+    // ── Mood picker: highlight selected chip ───────────────────────────
+    private fun setupMoodPicker() {
+        val chips = listOf(
+            binding.moodRough,
+            binding.moodOkay,
+            binding.moodGood,
+            binding.moodGreat
+        )
+
+        chips.forEach { chip ->
+            chip.setOnClickListener {
+                // Reset all to inactive
+                chips.forEach { it.setBackgroundResource(R.drawable.bg_mood_chip) }
+                // Highlight selected
+                chip.setBackgroundResource(R.drawable.bg_mood_chip_active)
+            }
+        }
+    }
+
+    // ── Tool card click listeners ──────────────────────────────────────
+    private fun setupToolCards() {
+        binding.toolNotes.setOnClickListener {
+            // TODO: navigate to NotesFragment
+        }
+        binding.toolPlanner.setOnClickListener {
+            // TODO: navigate to PlannerFragment
+        }
+        binding.toolQuiz.setOnClickListener {
+            // TODO: navigate to QuizFragment
+        }
+        binding.toolProgress.setOnClickListener {
+            // TODO: navigate to ProgressFragment
+        }
     }
 
     override fun onDestroyView() {
