@@ -1,4 +1,6 @@
 package com.example.learnmate.ui.planner
 
-class PlannerFragment {
-}
+import androidx.fragment.app.Fragment
+import com.example.learnmate.R
+
+class PlannerFragment : Fragment(R.layout.fragment_planner)
