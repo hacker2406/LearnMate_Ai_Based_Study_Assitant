@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,70 +16,141 @@
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- Bottom Navigation -->
-
     <LinearLayout
         android:id="@+id/bottomNav"
         android:layout_width="0dp"
         android:layout_height="72dp"
         android:orientation="horizontal"
         android:background="#1F1F2E"
-        android:gravity="center"
-        android:paddingHorizontal="24dp"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageView
-            android:id="@+id/navHome"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+        <!-- Home -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_home"
-            android:tint="#FFFFFF"/>
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <ImageView
-            android:id="@+id/navNotes"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            <ImageView
+                android:id="@+id/navHome"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/house"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:textSize="10sp"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="3dp"/>
+
+        </LinearLayout>
+
+        <!-- Notes -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_notes"
-            android:tint="#9CA3AF"/>
+            android:orientation="vertical"
+            android:gravity="center">
 
+            <ImageView
+                android:id="@+id/navNotes"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/notes"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notes"
+                android:textSize="10sp"
+                android:textColor="#9CA3AF"
+                android:layout_marginTop="3dp"/>
+
+        </LinearLayout>
+
+        <!-- Center spacer for FAB -->
         <FrameLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
 
-        <ImageView
-            android:id="@+id/navPlanner"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+        <!-- Planner -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_calendar"
-            android:tint="#9CA3AF"/>
+            android:orientation="vertical"
+            android:gravity="center">
 
-        <ImageView
-            android:id="@+id/navProfile"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            <ImageView
+                android:id="@+id/navPlanner"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/calendar"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Planner"
+                android:textSize="10sp"
+                android:textColor="#9CA3AF"
+                android:layout_marginTop="3dp"/>
+
+        </LinearLayout>
+
+        <!-- Profile -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/ic_profile"
-            android:tint="#9CA3AF"/>
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/navProfile"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/profile"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textSize="10sp"
+                android:textColor="#9CA3AF"
+                android:layout_marginTop="3dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <!-- AI CENTER BUTTON -->
-
+    <!-- AI CENTER FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/navAi"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:src="@drawable/ic_ai"
-        android:tint="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/robot"
+        app:tint="@null"
         android:backgroundTint="#7C3AED"
+        android:elevation="12dp"
+        app:fabSize="normal"
+        app:borderWidth="0dp"
+        app:maxImageSize="32dp"
         app:layout_constraintBottom_toTopOf="@id/bottomNav"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:translationY="32dp"/>
+        android:translationY="28dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
