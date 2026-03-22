@@ -90,7 +90,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 .commit()
         }
         binding.toolPlanner.setOnClickListener {
-            // TODO: navigate to PlannerFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFragmentContainer,
+                    com.example.learnmate.ui.planner.PlannerFragment())
+                .addToBackStack(null)
+                .commit()
         }
         binding.toolQuiz.setOnClickListener {
             // TODO: navigate to QuizFragment
