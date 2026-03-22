@@ -83,7 +83,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     // ── Tool card click listeners ──────────────────────────────────────
     private fun setupToolCards() {
         binding.toolNotes.setOnClickListener {
-            // TODO: navigate to NotesFragment
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFragmentContainer,
+                    com.example.learnmate.ui.notes.NotesFragment())
+                .addToBackStack(null)
+                .commit()
         }
         binding.toolPlanner.setOnClickListener {
             // TODO: navigate to PlannerFragment
