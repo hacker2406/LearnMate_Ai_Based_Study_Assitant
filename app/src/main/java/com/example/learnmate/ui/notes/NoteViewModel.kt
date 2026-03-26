@@ -8,11 +8,14 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.learnmate.data.model.Note
 import com.example.learnmate.data.repository.NoteRepository
+import com.example.learnmate.data.repository.UserStatsRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.util.UUID
 
 class NoteViewModel : ViewModel() {
+
+    private val statsRepo = UserStatsRepository()
 
     private val repository = NoteRepository()
     val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
@@ -45,10 +48,13 @@ class NoteViewModel : ViewModel() {
             )
 
             val result = repository.saveNote(note)
-            _noteState.value = if (result.isSuccess) {
-                NoteState.Success("Note saved!")
+            if (result.isSuccess) {
+                statsRepo.awardXP(userId, 10) // +10 XP for saving a note
+                _noteState.value = NoteState.Success("Note saved! +10 XP")
             } else {
-                NoteState.Error(result.exceptionOrNull()?.message ?: "Failed to save")
+                _noteState.value = NoteState.Error(
+                    result.exceptionOrNull()?.message ?: "Failed to save"
+                )
             }
         }
     }

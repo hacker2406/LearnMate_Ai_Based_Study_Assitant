@@ -88,6 +88,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/tvStreakChip"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -101,6 +102,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/tvXpChip"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -114,6 +116,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/tvLevelChip"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -141,6 +144,7 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tvXpLabel"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -149,6 +153,7 @@
                             android:textSize="12sp"/>
 
                         <TextView
+                            android:id="@+id/tvXpValues"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="1240 / 1800 XP"
@@ -158,6 +163,7 @@
                     </LinearLayout>
 
                     <ProgressBar
+                        android:id="@+id/xpProgressBar"
                         android:layout_width="match_parent"
                         android:layout_height="8dp"
                         android:layout_marginTop="6dp"
@@ -276,6 +282,7 @@
 
                 <!-- FOCUS TIMER -->
                 <TextView
+                    android:id="@+id/tvTimerInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -296,6 +303,7 @@
 
                     <!-- Ring placeholder -->
                     <ProgressBar
+                        android:id="@+id/focusProgressBar"
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:progress="72"
@@ -313,6 +321,7 @@
                         android:layout_marginStart="14dp">
 
                         <TextView
+                            android:id="@+id/tvTimerSub"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Current streak: 1h 26m 🔥"
@@ -387,6 +396,7 @@
                             android:layout_marginTop="6dp"/>
 
                         <TextView
+                            android:id="@+id/tvNotesCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="12 notes"
@@ -422,6 +432,7 @@
                             android:layout_marginTop="6dp"/>
 
                         <TextView
+                            android:id="@+id/tvTasksDue"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="3 tasks due"

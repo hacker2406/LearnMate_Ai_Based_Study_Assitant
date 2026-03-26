@@ -7,12 +7,14 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.learnmate.data.model.Task
 import com.example.learnmate.data.repository.TaskRepository
+import com.example.learnmate.data.repository.UserStatsRepository
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
 import java.util.UUID
 
 class TaskViewModel : ViewModel() {
 
+    private val statsRepo = UserStatsRepository()
     private val repository = TaskRepository()
     val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
@@ -63,6 +65,10 @@ class TaskViewModel : ViewModel() {
     fun toggleComplete(task: Task) {
         viewModelScope.launch {
             repository.toggleTaskComplete(userId, task.id, !task.isCompleted)
+            // Award XP only when marking as complete (not uncomplete)
+            if (!task.isCompleted) {
+                statsRepo.awardXP(userId, 20) // +20 XP for completing a task
+            }
         }
     }
 
