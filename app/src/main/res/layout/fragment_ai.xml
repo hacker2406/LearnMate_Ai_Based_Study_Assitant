@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEF0F6">
+
+    <!-- ── HEADER ── -->
+    <LinearLayout
+        android:id="@+id/aiHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_home_header"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:paddingBottom="24dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🤖"
+                android:textSize="28sp"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AI ASSISTANT"
+                    android:textColor="#CCEEFF"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LearnMate AI"
+                    android:textColor="#FFFFFF"
+                    android:textSize="22sp"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+
+            <!-- Clear chat button -->
+            <TextView
+                android:id="@+id/btnClearChat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Clear"
+                android:textColor="#CCEEFF"
+                android:textSize="13sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <!-- ── Mode selector ── -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/modeChat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="💬 Chat"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/bg_tab_active"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/modeSummarize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="📝 Summarize"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#CCEEFF"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/bg_stat_chip"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/modeQuiz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="🧠 Quiz"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#CCEEFF"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/bg_stat_chip"
+                    android:layout_marginEnd="8dp"/>
+
+                <TextView
+                    android:id="@+id/modeStudyPlan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="📚 Study Plan"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#CCEEFF"
+                    android:gravity="center"
+                    android:paddingHorizontal="16dp"
+                    android:background="@drawable/bg_stat_chip"/>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+    </LinearLayout>
+
+    <!-- ── CHAT RECYCLERVIEW ── -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChat"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="8dp"
+        android:clipToPadding="false"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/aiHeader"
+        app:layout_constraintBottom_toTopOf="@id/inputArea"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- ── LOADING INDICATOR ── -->
+    <LinearLayout
+        android:id="@+id/loadingIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/bg_bot_bubble"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/inputArea"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🤖"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LearnMate is thinking..."
+            android:textColor="#9CA3AF"
+            android:textSize="13sp"
+            android:textStyle="italic"/>
+
+    </LinearLayout>
+
+    <!-- ── INPUT AREA ── -->
+    <LinearLayout
+        android:id="@+id/inputArea"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#FFFFFF"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="10dp"
+        android:elevation="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:boxCornerRadiusTopStart="24dp"
+            app:boxCornerRadiusTopEnd="24dp"
+            app:boxCornerRadiusBottomStart="24dp"
+            app:boxCornerRadiusBottomEnd="24dp"
+            app:boxBackgroundColor="#F9FAFB"
+            app:boxStrokeColor="#EDE9FE"
+            app:boxStrokeWidth="1dp"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ask anything..."
+                android:textSize="14sp"
+                android:textColor="#1F1F2E"
+                android:maxLines="4"
+                android:inputType="textMultiLine|textCapSentences"
+                android:paddingVertical="12dp"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Send button -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:srcCompat="@android:drawable/ic_menu_send"
+            app:tint="#FFFFFF"
+            android:backgroundTint="#7C3AED"
+            app:fabSize="mini"
+            app:borderWidth="0dp"
+            app:elevation="4dp"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

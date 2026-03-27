@@ -27,5 +27,13 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.learnmate.ui.main.MainFragment"
-        android:label="Main"/>
+        android:label="Main">
+
+        <action
+            android:id="@+id/action_main_to_auth"
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
+
+    </fragment>
 </navigation>

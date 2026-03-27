@@ -109,18 +109,14 @@ class UserStatsRepository {
     // ── Add study minutes ──────────────────────────────────────────────
     suspend fun addStudyMinutes(userId: String, minutes: Int): Result<Unit> {
         return try {
-            val snapshot = userDoc(userId).get().await()
-            val total = snapshot.getLong("totalStudyMinutes")?.toInt() ?: 0
-            val todayTotal = snapshot.getLong("todayStudyMinutes")?.toInt() ?: 0
-            val lastDateStr = snapshot.getString("lastStudyDateString") ?: ""
-            val todayStr = getTodayString()
+            val snapshot       = userDoc(userId).get().await()
+            val total          = snapshot.getLong("totalStudyMinutes")?.toInt() ?: 0
+            val todayTotal     = snapshot.getLong("todayStudyMinutes")?.toInt() ?: 0
+            val lastDateStr    = snapshot.getString("lastStudyDateString") ?: ""
+            val todayStr       = getTodayString()
 
-            // Reset today's minutes if it's a new day
-            val newTodayMinutes = if (lastDateStr == todayStr) {
-                todayTotal + minutes
-            } else {
-                minutes
-            }
+            val newTodayMinutes = if (lastDateStr == todayStr) todayTotal + minutes
+            else minutes
 
             userDoc(userId).update(
                 mapOf(
@@ -128,6 +124,15 @@ class UserStatsRepository {
                     "todayStudyMinutes" to newTodayMinutes
                 )
             ).await()
+
+            // ── Also log to studyLog for weekly chart ──────────────────
+            userDoc(userId).collection("studyLog").add(
+                hashMapOf(
+                    "timestamp" to System.currentTimeMillis(),
+                    "minutes"   to minutes
+                )
+            ).await()
+
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

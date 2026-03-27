@@ -39,7 +39,7 @@ class MainFragment : Fragment(R.layout.fragment_main) {
         }
 
         binding.navAi.setOnClickListener {
-            // AI screen later
+            loadFragment(com.example.learnmate.ui.ai.AiFragment())
         }
     }
 

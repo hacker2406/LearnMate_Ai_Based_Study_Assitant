@@ -1,5 +1,9 @@
 package com.example.learnmate.data.model
 
+import com.google.firebase.firestore.IgnoreExtraProperties
+
+@IgnoreExtraProperties
+
 data class UserStats(
     val userId: String = "",
     val xp: Int = 0,

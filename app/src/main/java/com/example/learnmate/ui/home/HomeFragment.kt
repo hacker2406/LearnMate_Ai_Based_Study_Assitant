@@ -66,36 +66,38 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.homeData.observe(viewLifecycleOwner) { data ->
             val stats = data.stats
 
-            // ── Stat chips ─────────────────────────────────────────────
-            binding.tvStreakChip.text  = "🔥  ${stats.streak} day streak"
-            binding.tvXpChip.text     = "⚡  ${stats.xp} XP"
-            binding.tvLevelChip.text  = "🏅  Lv. ${stats.level}"
+            // ── Stat chips ─────────────────────────────────────────────────
+            binding.tvStreakChip.text = "🔥  ${stats.streak} day streak"
+            binding.tvXpChip.text    = "⚡  ${stats.xp} XP"
+            binding.tvLevelChip.text = "🏅  Lv. ${stats.level}"
 
-            // ── XP progress bar ────────────────────────────────────────
+            // ── XP progress bar ────────────────────────────────────────────
             val xpForNext = stats.level * 200
-            val xpInLevel = stats.xp - ((stats.level - 1) * 200)
-            binding.tvXpLabel.text  = "Level ${stats.level} — ${stats.levelTitle}"
-            binding.tvXpValues.text = "${stats.xp} / $xpForNext XP"
-            binding.xpProgressBar.max      = xpForNext
+            binding.tvXpLabel.text        = "Level ${stats.level} — ${stats.levelTitle}"
+            binding.tvXpValues.text       = "${stats.xp} / $xpForNext XP"
+            binding.xpProgressBar.max     = xpForNext
             binding.xpProgressBar.progress = stats.xp
 
-            // ── TODAY cards ────────────────────────────────────────────
+            // ── TODAY card 1 — STUDIED ─────────────────────────────────────
             val studiedHours   = stats.todayStudyMinutes / 60
             val studiedMinutes = stats.todayStudyMinutes % 60
-
-            binding.cardStudy.tvCardValue.text = if (studiedHours > 0) "${studiedHours}h ${studiedMinutes}m"
-            else "${studiedMinutes}m"
-
-            binding.cardTask.tvCardValue.text = "${data.completedTodayCount} / ${data.totalTasksCount}"
-
-
+            binding.cardStudy.tvCardIcon.text  = "⏱️"
+            binding.cardStudy.tvCardValue.text = if (studiedHours > 0)
+                "${studiedHours}h ${studiedMinutes}m" else "${studiedMinutes}m"
             binding.cardStudy.tvCardLabel.text = "STUDIED"
 
+            // ── TODAY card 2 — TASKS DONE ──────────────────────────────────
+            binding.cardTask.tvCardIcon.text  = "✅"
+            binding.cardTask.tvCardValue.text =
+                "${data.completedTodayCount} / ${data.totalTasksCount}"
             binding.cardTask.tvCardLabel.text = "TASKS DONE"
 
+            // ── TODAY card 3 — QUIZ PTS ────────────────────────────────────
+            binding.cardQuiz.tvCardIcon.text  = "🧠"
+            binding.cardQuiz.tvCardValue.text = "${data.quizXpToday}"
             binding.cardQuiz.tvCardLabel.text = "QUIZ PTS"
 
-            // ── Tool cards — live counts ───────────────────────────────
+            // ── Tool cards — live counts ───────────────────────────────────
             binding.tvNotesCount.text =
                 "${data.notesCount} ${if (data.notesCount == 1) "note" else "notes"}"
             binding.tvTasksDue.text =
@@ -108,32 +110,36 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.timerState.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is TimerState.Idle -> {
-                    binding.tvTimerInfo.text    = "Ready to focus?"
-                    binding.tvTimerSub.text     = "25:00 Pomodoro session"
-                    binding.btnTimerToggle.text = "Start"
-                    binding.focusProgressBar.progress = 0
+                    binding.focusProgressBar.progress   = 0
+                    binding.focusProgressBar.centerText = "25:00"
+                    binding.tvTimerInfo.text            = "Ready to focus?"
+                    binding.tvTimerSub.text             = "25 min Pomodoro session"
+                    binding.btnTimerToggle.text         = "Start"
                 }
                 is TimerState.Running -> {
-                    val mins = state.remainingSeconds / 60
-                    val secs = state.remainingSeconds % 60
+                    val mins     = state.remainingSeconds / 60
+                    val secs     = state.remainingSeconds % 60
                     val progress = ((25 * 60 - state.remainingSeconds) * 100) / (25 * 60)
-                    binding.tvTimerInfo.text    = "Focus session active 🔥"
-                    binding.tvTimerSub.text     = "Ends in %02d:%02d".format(mins, secs)
-                    binding.btnTimerToggle.text = "Pause"
-                    binding.focusProgressBar.progress = progress
+                    binding.focusProgressBar.progress   = progress
+                    binding.focusProgressBar.centerText = "%02d:%02d".format(mins, secs)
+                    binding.tvTimerInfo.text            = "Focus session active 🔥"
+                    binding.tvTimerSub.text             = "%02d:%02d remaining".format(mins, secs)
+                    binding.btnTimerToggle.text         = "Pause"
                 }
                 is TimerState.Paused -> {
-                    val mins = state.remainingSeconds / 60
-                    val secs = state.remainingSeconds % 60
-                    binding.tvTimerInfo.text    = "Session paused"
-                    binding.tvTimerSub.text     = "%02d:%02d remaining".format(mins, secs)
-                    binding.btnTimerToggle.text = "Resume"
+                    val mins     = state.remainingSeconds / 60
+                    val secs     = state.remainingSeconds % 60
+                    binding.focusProgressBar.centerText = "%02d:%02d".format(mins, secs)
+                    binding.tvTimerInfo.text            = "Session paused ⏸"
+                    binding.tvTimerSub.text             = "%02d:%02d remaining".format(mins, secs)
+                    binding.btnTimerToggle.text         = "Resume"
                 }
                 is TimerState.Completed -> {
-                    binding.tvTimerInfo.text    = "Session complete! +30 XP 🎉"
-                    binding.tvTimerSub.text     = "Take a 5 min break"
-                    binding.btnTimerToggle.text = "Start"
-                    binding.focusProgressBar.progress = 100
+                    binding.focusProgressBar.progress   = 100
+                    binding.focusProgressBar.centerText = "Done!"
+                    binding.tvTimerInfo.text            = "Session complete! +30 XP 🎉"
+                    binding.tvTimerSub.text             = "Take a 5 min break"
+                    binding.btnTimerToggle.text         = "Start"
                 }
             }
         }
@@ -178,8 +184,20 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 .addToBackStack(null)
                 .commit()
         }
-        binding.toolQuiz.setOnClickListener { }
-        binding.toolProgress.setOnClickListener { }
+        binding.toolQuiz.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFragmentContainer,
+                    com.example.learnmate.ui.quiz.QuizFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+        binding.toolProgress.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainFragmentContainer,
+                    com.example.learnmate.ui.progress.ProgressFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     override fun onDestroyView() {

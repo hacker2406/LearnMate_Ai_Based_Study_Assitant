@@ -282,7 +282,6 @@
 
                 <!-- FOCUS TIMER -->
                 <TextView
-                    android:id="@+id/tvTimerInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -301,17 +300,11 @@
                     android:gravity="center_vertical"
                     android:padding="16dp">
 
-                    <!-- Ring placeholder -->
-                    <ProgressBar
+                    <!-- Circular progress -->
+                    <com.example.learnmate.ui.custom.CircularProgressView
                         android:id="@+id/focusProgressBar"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:progress="72"
-                        android:max="100"
-                        android:progressTint="#7C3AED"
-                        android:progressBackgroundTint="#EDE9FE"
-                        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
-                        android:rotation="-90"/>
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"/>
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -321,18 +314,19 @@
                         android:layout_marginStart="14dp">
 
                         <TextView
-                            android:id="@+id/tvTimerSub"
+                            android:id="@+id/tvTimerInfo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Current streak: 1h 26m 🔥"
+                            android:text="Ready to focus?"
                             android:textColor="#1F1F2E"
                             android:textSize="13sp"
                             android:textStyle="bold"/>
 
                         <TextView
+                            android:id="@+id/tvTimerSub"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pomodoro ends in 14 min"
+                            android:text="25:00 Pomodoro session"
                             android:textColor="#9CA3AF"
                             android:textSize="12sp"
                             android:layout_marginTop="3dp"/>
@@ -346,7 +340,7 @@
                         android:background="@drawable/bg_button_gradient"
                         android:paddingHorizontal="14dp"
                         android:paddingVertical="8dp"
-                        android:text="Pause"
+                        android:text="Start"
                         android:textColor="#FFFFFF"
                         android:textSize="12sp"
                         android:textStyle="bold"/>
