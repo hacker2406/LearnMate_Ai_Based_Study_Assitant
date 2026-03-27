@@ -28,6 +28,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setupToolCards()
         observeHomeData()
         observeTimer()
+        observeLiveSession()
 
         // Update streak when home opens
         viewModel.updateStreakOnOpen()
@@ -165,6 +166,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                 chips.forEach { it.setBackgroundResource(R.drawable.bg_mood_chip) }
                 chip.setBackgroundResource(R.drawable.bg_mood_chip_active)
             }
+        }
+    }
+
+    private fun observeLiveSession() {
+        viewModel.liveSessionMinutes.observe(viewLifecycleOwner) { sessionMins ->
+            // Combine Firestore todayStudyMinutes + current live session
+            val firestoreMins  = viewModel.homeData.value?.stats?.todayStudyMinutes ?: 0
+            val totalMins      = firestoreMins + sessionMins
+            val hours          = totalMins / 60
+            val minutes        = totalMins % 60
+
+            binding.cardStudy.tvCardValue.text =
+                if (hours > 0) "${hours}h ${minutes}m" else "${minutes}m"
         }
     }
 

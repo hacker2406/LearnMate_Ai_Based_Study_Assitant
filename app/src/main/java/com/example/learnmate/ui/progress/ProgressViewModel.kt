@@ -18,6 +18,13 @@ class ProgressViewModel : ViewModel() {
     private val progressRepo = ProgressRepository()
     private val statsRepo    = UserStatsRepository()
 
+    private val _liveSessionMinutes = MutableLiveData(0)
+    val liveSessionMinutes: LiveData<Int> = _liveSessionMinutes
+
+    fun updateLiveSessionMinutes(minutes: Int) {
+        _liveSessionMinutes.value = minutes
+    }
+
     // ── Weekly stats ───────────────────────────────────────────────────
     private val _weeklyStats = MutableLiveData<WeeklyStats>()
     val weeklyStats: LiveData<WeeklyStats> = _weeklyStats

@@ -79,27 +79,31 @@ class UserStatsRepository {
     // ── Update streak on app open / study session ──────────────────────
     suspend fun updateStreak(userId: String): Result<Unit> {
         return try {
-            val snapshot = userDoc(userId).get().await()
+            val snapshot    = userDoc(userId).get().await()
             val lastDateStr = snapshot.getString("lastStudyDateString") ?: ""
-            val todayStr = getTodayString()
-
+            val todayStr    = getTodayString()
             val currentStreak = snapshot.getLong("streak")?.toInt() ?: 0
-            val yesterdayStr = getYesterdayString()
+            val yesterdayStr  = getYesterdayString()
 
             val newStreak = when (lastDateStr) {
-                todayStr     -> currentStreak          // already updated today
-                yesterdayStr -> currentStreak + 1      // consecutive day
-                ""           -> 1                      // first time
-                else         -> 1                      // streak broken
+                todayStr     -> currentStreak
+                yesterdayStr -> currentStreak + 1
+                ""           -> 1
+                else         -> 1
             }
 
-            userDoc(userId).update(
-                mapOf(
-                    "streak" to newStreak,
-                    "lastStudyDate" to System.currentTimeMillis(),
-                    "lastStudyDateString" to todayStr
-                )
-            ).await()
+            // ── Reset todayStudyMinutes if it's a new day ──────────────
+            val isNewDay = lastDateStr != todayStr
+            val updateMap = mutableMapOf<String, Any>(
+                "streak"             to newStreak,
+                "lastStudyDate"      to System.currentTimeMillis(),
+                "lastStudyDateString" to todayStr
+            )
+            if (isNewDay) {
+                updateMap["todayStudyMinutes"] = 0
+            }
+
+            userDoc(userId).update(updateMap).await()
             Result.success(Unit)
         } catch (e: Exception) {
             Result.failure(e)

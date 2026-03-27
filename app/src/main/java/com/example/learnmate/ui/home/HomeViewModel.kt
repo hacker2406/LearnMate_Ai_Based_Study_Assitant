@@ -21,6 +21,8 @@ class HomeViewModel : ViewModel() {
     private val noteRepo  = NoteRepository()
     private val taskRepo  = TaskRepository()
     private val quizRepo  = QuizRepository()
+    private val _liveSessionMinutes = MutableLiveData(0)
+    val liveSessionMinutes: LiveData<Int> = _liveSessionMinutes
 
     // ── Combined home data ─────────────────────────────────────────────
     val homeData: LiveData<HomeData> = combine(
@@ -59,12 +61,17 @@ class HomeViewModel : ViewModel() {
 
     fun startTimer() {
         if (timerJob?.isActive == true) return
+        val totalSeconds = 25 * 60
         timerJob = viewModelScope.launch {
             _timerState.value = TimerState.Running(remainingSeconds)
             while (remainingSeconds > 0) {
                 kotlinx.coroutines.delay(1000)
                 remainingSeconds--
                 _timerState.value = TimerState.Running(remainingSeconds)
+
+                // ── Update live session minutes every 60 seconds ───────
+                val elapsedSeconds = totalSeconds - remainingSeconds
+                _liveSessionMinutes.value = elapsedSeconds / 60
             }
             onPomodoroComplete()
         }
@@ -73,14 +80,15 @@ class HomeViewModel : ViewModel() {
     fun pauseTimer() {
         timerJob?.cancel()
         _timerState.value = TimerState.Paused(remainingSeconds)
+        // Keep liveSessionMinutes as is so home still shows elapsed time
     }
 
     fun resetTimer() {
         timerJob?.cancel()
         remainingSeconds = 25 * 60
+        _liveSessionMinutes.value = 0
         _timerState.value = TimerState.Idle
     }
-
     private fun onPomodoroComplete() {
         viewModelScope.launch {
             statsRepo.awardXP(userId, 30)
