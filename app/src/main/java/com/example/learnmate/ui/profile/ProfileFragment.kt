@@ -112,11 +112,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
 
         binding.settingAbout.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "LearnMate v1.0 — AI Study Assistant",
-                Toast.LENGTH_SHORT
-            ).show()
+            val intent = android.content.Intent(
+                android.content.Intent.ACTION_VIEW,
+                android.net.Uri.parse(
+                    "https://hacker2406.github.io/learnmate-privacy/"
+                )
+            )
+            startActivity(intent)
         }
     }
 
