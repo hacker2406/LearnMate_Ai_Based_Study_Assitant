@@ -12,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.learnmate"
+        applicationId = "com.ratulpaul.learnmate"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
